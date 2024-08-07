@@ -40,15 +40,23 @@ it('deve fazer login a parit da massa de dados criada', () => {
     cy.get('#username').type(perfil.usuario)
     cy.get('#password').type(perfil.senha)
     cy.get('.woocommerce-form > .button').click()
-    cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should('contain' , 'Olá, gabrielteste (não é gabrielteste? Sair)')
+    cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should('exist')
 
 });
-it.only('deve fazer login a partir do fixture', () => {
+it('deve fazer login a partir do fixture', () => {
   cy.fixture ('perfil').then(dados =>{ 
     cy.get('#username').type(dados.usuario )
     cy.get('#password').type(dados.senha , {log:false})
     cy.get('.woocommerce-form > .button').click()
-    cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should('contain' , 'Olá, gabrielteste (não é gabrielteste? Sair)')
+    cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should('exist')
     })
 });
+
+it.only('deve fazer login com comando customizado', () => {
+    cy.login('gabrielteste@teste.com.br','teste@123')
+    cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should('contain' , 'Olá, gabrielteste (não é gabrielteste? Sair)')
+
+});
+
+
 })

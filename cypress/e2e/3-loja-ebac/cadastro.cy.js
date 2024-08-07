@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 describe( 'Funcionalidade:cadastro', () => {
 
     beforeEach(() => {
-      cy.visit('http://lojaebac.ebaconline.art.br/minha-conta/')
+      cy.visit('minha-conta/')
 });
 
     afterEach(() => {
@@ -15,14 +15,9 @@ describe( 'Funcionalidade:cadastro', () => {
         cy.get('#reg_email').type('gabrielthiego@teste.com.br')
         cy.get('#reg_password').type('testesenhaforte')
         cy.get(':nth-child(4) > .button').click()
-        
         cy.get('.woocommerce-error > li').should('contain', 'Erro: Uma conta já está registrada com seu endereço de e-mail. Faça login.')
-        cy.get('.woocommerce-error > li').should('exist')
-       
-   
-        
+        cy.get('.woocommerce-error > li').should('exist')       
         });
-
 
     it('deve completar o cadastro com sucesso', () => {
             cy.get('#reg_email').type(faker.internet.email())
@@ -53,5 +48,10 @@ describe( 'Funcionalidade:cadastro', () => {
             cy.get('#account_last_name').type(sobrenome)
             cy.get('.woocommerce-Button').click()
             cy.get('.woocommerce-message').should('exist')
-        });    
+        }); 
+        
+    it.only('deve completar o cadastro com sucesso usando commando customizado', () => {
+        cy.preCadastro(faker.internet.email(), 'testesenhaforte', faker.person.firstName(), faker.person.lastName() )
+        cy.get('.woocommerce-message').should('exist')
+    });
 });
