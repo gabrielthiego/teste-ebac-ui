@@ -21,18 +21,22 @@ describe('Funcionalidade: Produtos', () => {
         
     });
 
-    it.only('Deve buscar um produto com sucesso', () => {
+    it('Deve buscar um produto com sucesso', () => {
         let produto = 'Helena Hooded Fleece'
         produtosPage.buscarProduto(produto)
         cy.get('.product_title').should('contain', produto)
     });
       
     it('Deve visitar a página do produto', () => {
-        
+        produtosPage.visitarProduto('Arcadio Gym Short')
+        cy.get('.product_title').should('contain', 'Arcadio Gym Short')
     });
    
-    it('Deve adicionar o produto ao carrinho', () => {
-        
+    it.only('Deve adicionar o produto ao carrinho', () => {
+         let qtd = 7 
+        produtosPage.visitarProduto('Stellar Solar Jacket')
+        produtosPage.addCarrinho('S', 'Red' , qtd)
+        cy.get('.woocommerce-message').should('contain' , qtd + ' × “Stellar Solar Jacket” foram adicionados no seu carrinho.')
     });
 });
     
