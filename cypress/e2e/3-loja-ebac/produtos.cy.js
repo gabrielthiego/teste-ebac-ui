@@ -38,5 +38,18 @@ describe('Funcionalidade: Produtos', () => {
         produtosPage.addCarrinho('S', 'Red' , qtd)
         cy.get('.woocommerce-message').should('contain' , qtd + ' × “Stellar Solar Jacket” foram adicionados no seu carrinho.')
     });
+
+    
+    it.only('Deve adicionar o produto ao carrinho por massa de dados', () => {
+       cy.fixture('produtos').then(dados => {
+
+        produtosPage.visitarProduto(dados[2].nomeProduto)
+        produtosPage.addCarrinho(
+            dados[2].tamanho, 
+            dados[2].cor, 
+            dados[2].quantidade)
+        cy.get('.woocommerce-message').should('contain' , dados[2].nomeProduto)
+        });
+    })   
 });
     
